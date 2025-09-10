@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Перенаправление вызова</title>
+    <!-- Немедленное перенаправление на URI для звонка -->
+    <meta http-equiv="refresh" content="0; url=tel:+74993020609">
+    <script>
+      // Дублирующая логика на JavaScript для большей надежности
+      window.location.href = 'tel:+74993020609';
+    </script>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+        color: #333;
+      }
+      .container {
+        padding: 20px;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Идет набор номера...</h1>
+        <p>Если вызов не начался автоматически, <a href="tel:+74993020609">нажмите сюда, чтобы позвонить</a>.</p>
+    </div>
+</body>
+</html>
