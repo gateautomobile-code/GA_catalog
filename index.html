@@ -128,7 +128,7 @@
             <p class="text-sm text-gray-500 mb-2"></p>
             <p class="text-xs text-gray-500 mt-2 max-w-2xl mx-auto">Не является публичной офертой. Сведения о стоимости являются рекламной информацией и могут не совпадать с окончательной стоимостью продажи. Все фотографии представлены с целью иллюстрации предложения. Для точной информации об ассортименте и ценах свяжитесь с сотрудниками компании.</p>
             <div class="mt-4 flex justify-center items-center gap-2">
-                <span class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Beta 3.10.3</span>
+                <span class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Beta 3.10.4</span>
                 <a href="https://yandex.by/maps/org/gate_automobile/152188575796/?from=mapframe&ll=37.670141%2C55.714044&z=16" target="_blank" rel="noopener noreferrer" class="inline-block text-black text-xs font-semibold px-2.5 py-0.5 rounded-full" style="background-color: #FFCC00;">Посмотреть на Яндекс.Картах</a>
             </div>
         </footer>
@@ -800,28 +800,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const callButton = document.getElementById('call-button');
     if (callButton) {
-        // Фикс звонка через попап с кнопкой 'Позвонить' (OK), которая вызывает tel: в Mini App
+        // Фикс звонка через попап + openLink для системного dialer в Mini App (обход блока tel:)
         callButton.addEventListener('click', async (e) => {
             e.preventDefault();
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.showPopup) {
-                try {
-                    const buttonId = await Telegram.WebApp.showPopup({
-                       message: 'Позвонить по номеру: +7 499 302-06-09',
-                       buttons: [
-                           { id: 'call', type: 'ok', text: 'Позвонить' },
-                           { type: 'close', text: 'Закрыть' }
-                        ]
-                   });
-                   if (buttonId === 'call') {
-                       window.location.href = 'tel:+74993020609';
-                   }
-                } catch (err) {
-                    // Handle potential errors if showPopup is closed unexpectedly or fails
-                    console.error('Telegram Popup error:', err);
-                }
-            } else {
-                window.location.href = 'tel:+74993020609';  // Для обычного браузера
-            }
+            if (window.Telegram && window.Telegram.WebApp) {
+               const buttonId = await Telegram.WebApp.showPopup({
+                   message: 'Позвонить по номеру: +7 499 302-06-09',
+                   buttons: [
+                       { id: 'call', type: 'ok', text: 'Позвонить' },
+                       { type: 'close', text: 'Закрыть' }
+                   ]
+               });
+               if (buttonId === 'call') {
+                   Telegram.WebApp.openLink('tel:+74993020609', { try_instant_view: false });
+               }
+           } else {
+               window.location.href = 'tel:+74993020609';  // Для обычного браузера
+           }
         });
     }
 
