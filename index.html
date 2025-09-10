@@ -128,7 +128,7 @@
             <p class="text-sm text-gray-500 mb-2"></p>
             <p class="text-xs text-gray-500 mt-2 max-w-2xl mx-auto">Не является публичной офертой. Сведения о стоимости являются рекламной информацией и могут не совпадать с окончательной стоимостью продажи. Все фотографии представлены с целью иллюстрации предложения. Для точной информации об ассортименте и ценах свяжитесь с сотрудниками компании.</p>
             <div class="mt-4 flex justify-center items-center gap-2">
-                <span class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Beta 3.10.1</span>
+                <span class="inline-block bg-gray-200 text-gray-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Beta 3.10.2</span>
                 <a href="https://yandex.by/maps/org/gate_automobile/152188575796/?from=mapframe&ll=37.670141%2C55.714044&z=16" target="_blank" rel="noopener noreferrer" class="inline-block text-black text-xs font-semibold px-2.5 py-0.5 rounded-full" style="background-color: #FFCC00;">Посмотреть на Яндекс.Картах</a>
             </div>
         </footer>
@@ -800,15 +800,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const callButton = document.getElementById('call-button');
     if (callButton) {
-        // Фикс звонка с подтверждением в Mini App (обход блока tel:)
+        // Фикс звонка через попап с кликабельной tel:-ссылкой в Mini App (обход блока)
         callButton.addEventListener('click', (e) => {
             e.preventDefault();
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.showConfirm) {
-                Telegram.WebApp.showConfirm('Позвонить по номеру +7 499 302-06-09?', (confirmed) => {
-                    if (confirmed) {
-                        window.location.href = 'tel:+74993020609';
-                    }
-                });
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.showPopup) {
+                Telegram.WebApp.showPopup({
+                   message: 'Позвонить по номеру: <a href="tel:+74993020609" style="color: #007aff; text-decoration: none;">+7 499 302-06-09</a>',
+                   buttons: [{ type: 'close', text: 'Закрыть' }]
+               });
             } else {
                 window.location.href = 'tel:+74993020609';  // Для обычного браузера
             }
