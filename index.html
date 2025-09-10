@@ -802,8 +802,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (callButton) {
         // Workaround для звонка в Telegram Mini App: установка location.href
         callButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'tel:+74993020609';
+            e.preventDefault(); // 1. Отменяем стандартное действие ссылки
+            window.location.href = 'tel:+74993020609'; // 2. Программно инициируем звонок
         });
     }
 
