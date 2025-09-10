@@ -800,10 +800,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const callButton = document.getElementById('call-button');
     if (callButton) {
-        // Workaround для звонка в Telegram Mini App: установка location.href
+        // Тест клика с alert для диагностики в Mini App
         callButton.addEventListener('click', (e) => {
-            e.preventDefault(); // 1. Отменяем стандартное действие ссылки
-            window.location.href = 'tel:+74993020609'; // 2. Программно инициируем звонок
+            e.preventDefault();
+            alert('Клик на кнопку звонка зарегистрирован!'); // Тест: Если это покажется, JS работает
+            window.location.href = 'tel:+74993020609';
         });
     }
 
